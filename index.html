@@ -13,6 +13,7 @@
 
 		<!-- could put this on another page and make the button a link and the page auto starts the timer -->
 		<h2 id="state-heading" aria-live="polite">Press the button to begin the timer</h2>
+		<p id="remaining-time"><span id="remaining-seconds">?</span> segundos</p>
 
 		<iframe id="musicbox" width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A777489118&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/lazyflowlazyflow" title="Lazy Flow" target="_blank" style="color: #cccccc; text-decoration: none;">Lazy Flow</a> · <a href="https://soundcloud.com/lazyflowlazyflow/tropical-vogue-vol3-mixtape-feat-vinii-revlon-khyree-lemon-hanabi-the-kunt-matyouz-laduree" title="Tropical Vogue Vol.3 Mixtape (feat. Vinii Revlon, Khyree, Lèmon, Hanabi The Kunt, Matyouz LaDurée)" target="_blank" style="color: #cccccc; text-decoration: none;">Tropical Vogue Vol.3 Mixtape (feat. Vinii Revlon, Khyree, Lèmon, Hanabi The Kunt, Matyouz LaDurée)</a></div>
 	</body>
@@ -24,20 +25,20 @@
 
 <script id="data" type="application/json">
 {
-	"warmupSeconds": 60,
-	"danceSeconds": 60,
-	"totalRestSeconds": 180,
-	"workSeconds": 1800,
-	"startAtMilliseconds": 180000
-}
-</script>
-<!-- other data
-{
 	"warmupSeconds": 6,
 	"danceSeconds": 6,
 	"totalRestSeconds": 18,
 	"workSeconds": 5,
-	"startAtMilliseconds": 180000
+	"startAtMilliseconds": 560000
+}
+</script>
+<!-- other data
+{
+	"warmupSeconds": 60,
+	"danceSeconds": 60,
+	"totalRestSeconds": 180,
+	"workSeconds": 1800,
+	"startAtMilliseconds": 560000
 }
 -->
 
@@ -67,6 +68,15 @@
 	// 		}, i * 10000)
 	// 	}
 	// }
+	const startCountdownDisplay = (seconds) => {
+		const timerElement = document.getElementById("remaining-seconds")
+		timerElement.innerText = seconds
+		const countdownInterval = setInterval(() => {
+			seconds--
+			if (seconds <= 0) clearInterval(countdownInterval)
+			else timerElement.innerText = seconds
+		}, 1000)
+	}
 
 	const startBtn = document.getElementById("start-btn")
 	startBtn.addEventListener("click", () => {
@@ -75,6 +85,7 @@
 	})
 
 	const danceWorkCycle = () => {
+		startCountdownDisplay(preferences.warmupSeconds)
 		heading.innerText = headingTexts.warmUp
 		// could add time indication in headers/in another element
 		musicbox.seekTo(preferences.startAtMilliseconds);
@@ -87,6 +98,7 @@
 		// increaseVolume();
 		const thatMusicBox = musicbox;
 		setTimeout(() => {
+			startCountdownDisplay(preferences.danceSeconds)
 			heading.innerText = headingTexts.dance
 			fadeTo(thatMusicBox, midVolume, 100, 300);
 		}, warmupMilliseconds)
@@ -95,11 +107,13 @@
 		setTimeout(() => {
 			heading.innerText = headingTexts.rest
 			const timeRemaining = (preferences.totalRestSeconds - preferences.danceSeconds - preferences.warmupSeconds) || 10;
+			startCountdownDisplay(timeRemaining)
 			fadeTo(thatMusicBox, midVolume, 10, timeRemaining * 1000);
 		}, musicPlayingMilliseconds)
 
 		const restMilliseconds = preferences.totalRestSeconds * 1000
 		setTimeout(() => {
+			startCountdownDisplay(preferences.workSeconds)
 			heading.innerText = headingTexts.work
 			musicbox.pause();
 			setTimeout(() => {
