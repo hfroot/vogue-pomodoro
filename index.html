@@ -27,7 +27,7 @@
 {
 	"warmupSeconds": 60,
 	"danceSeconds": 60,
-	"totalRestSeconds": 180,
+	"totalRestSeconds": 300,
 	"workSeconds": 1800,
 	"startAtMilliseconds": 0
 }
@@ -83,7 +83,7 @@
 		musicbox.play();
 		const midVolume = 30;
 		const warmupMilliseconds = preferences.warmupSeconds * 1000
-		const fadeToMidDuration = warmupMilliseconds / 3;
+		const fadeToMidDuration = warmupMilliseconds;
 	    fadeTo(musicbox, 0, midVolume, fadeToMidDuration);
 
 		const thatMusicBox = musicbox;
@@ -93,6 +93,7 @@
 			fadeTo(thatMusicBox, midVolume, 100, 300);
 		}, warmupMilliseconds)
 
+		// can't think of a better name for this variable, but really the music fades to 10 after, it doesn't stop yet
 		const musicPlayingMilliseconds = warmupMilliseconds + preferences.danceSeconds * 1000
 		setTimeout(() => {
 			heading.innerText = headingTexts.rest
