@@ -81,14 +81,13 @@
 	const startBtn = document.getElementById("start-btn")
 	startBtn.addEventListener("click", () => {
 		startBtn.innerText = "Reset the timer"
+		musicbox.seekTo(preferences.startAtMilliseconds);
 		danceWorkCycle()
 	})
 
 	const danceWorkCycle = () => {
 		startCountdownDisplay(preferences.warmupSeconds)
 		heading.innerText = headingTexts.warmUp
-		// could add time indication in headers/in another element
-		musicbox.seekTo(preferences.startAtMilliseconds);
 		musicbox.play();
 		const midVolume = 30;
 		const warmupMilliseconds = preferences.warmupSeconds * 1000
