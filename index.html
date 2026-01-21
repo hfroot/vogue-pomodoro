@@ -60,14 +60,6 @@
 		work: "Get that pussy to work"
 	}
 
-	// naive version, pre stack overflow
-	// const increaseVolume = (toVolume=50) => {
-	// 	for (var i = 0; i <= toVolume; i++) {
-	// 		setTimeout(() => {
-	// 			musicbox.setVolume(i);
-	// 		}, i * 10000)
-	// 	}
-	// }
 	const startCountdownDisplay = (seconds) => {
 		const timerElement = document.getElementById("remaining-seconds")
 		timerElement.innerText = seconds
@@ -94,7 +86,6 @@
 		const fadeToMidDuration = warmupMilliseconds / 3;
 	    fadeTo(musicbox, 0, midVolume, fadeToMidDuration);
 
-		// increaseVolume();
 		const thatMusicBox = musicbox;
 		setTimeout(() => {
 			startCountdownDisplay(preferences.danceSeconds)
