@@ -12,7 +12,7 @@
 		<button id="start-btn">Empezar el timer!</button>
 
 		<!-- could put this on another page and make the button a link and the page auto starts the timer -->
-		<h2 id="state-heading" aria-live="polite">Press the button to begin the timer</h2>
+		<h2 id="state-heading" aria-live="polite">Tocar el botón para empezar el timer</h2>
 		<p id="remaining-time"><span id="remaining-seconds">?</span> segundos</p>
 
 		<iframe id="musicbox" width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A777489118&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/lazyflowlazyflow" title="Lazy Flow" target="_blank" style="color: #cccccc; text-decoration: none;">Lazy Flow</a> · <a href="https://soundcloud.com/lazyflowlazyflow/tropical-vogue-vol3-mixtape-feat-vinii-revlon-khyree-lemon-hanabi-the-kunt-matyouz-laduree" title="Tropical Vogue Vol.3 Mixtape (feat. Vinii Revlon, Khyree, Lèmon, Hanabi The Kunt, Matyouz LaDurée)" target="_blank" style="color: #cccccc; text-decoration: none;">Tropical Vogue Vol.3 Mixtape (feat. Vinii Revlon, Khyree, Lèmon, Hanabi The Kunt, Matyouz LaDurée)</a></div>
@@ -22,24 +22,29 @@
 		<!-- add docs: hard refresh to clear data; close to stop -->
 		<form>
 			<label>
-				Warmup time (seconds)
+				Calentamiento
 				<input name="warmupSeconds" type="number" min="0" class="preferences-input" />
+				(segundos)
 			</label>
 			<label>
-				Dance time (seconds)
+				Baile
 				<input name="danceSeconds" type="number" min="0" class="preferences-input" />
+				(segundos)
 			</label>
 			<label>
-				Total rest time (seconds)
+				Pausa total
 				<input name="totalRestSeconds" type="number" min="0" class="preferences-input" />
+				(segundos)
 			</label>
 			<label>
-				Work time (seconds)
+				Trabajo sin música
 				<input name="workSeconds" type="number" min="0" class="preferences-input" />
+				(segundos)
 			</label>
 			<label>
-				Start timestamp (milliseconds)
+				Dondé empezar el track
 				<input name="startAtMilliseconds" type="number" min="0" class="preferences-input" />
+				(milisegundos)
 			</label>
 		</form>
 	</body>
@@ -180,6 +185,7 @@
 	Array.prototype.forEach.call(
 		inputs,
 		(inputElement) => {
+			// fix this to allow 0 value
 			if (!preferences[inputElement.name]) console.error(`${inputElement.name} not a valid preference`)
 			inputElement.placeholder = preferences[inputElement.name]
 			// NB: only called on blur
@@ -195,5 +201,11 @@
 	label {
 		display: block;
 		margin-bottom: 1rem;
+	}
+	h1, h2 {
+		color: #e041e8;
+	}
+	input.preferences-input {
+		margin-right: 0.2rem;
 	}
 </style>
